@@ -25,12 +25,12 @@ public class Dot : MonoBehaviour
     private void Start()
     {
         board = FindObjectOfType<BoardManager>();
-        targetX = (int)transform.position.x;
-        targetY = (int)transform.position.y;
-        row = targetY;
-        column = targetX;
-        beforeRow = row;
-        beforeColumn = column;
+        //targetY = (int)transform.position.y;
+        //targetX = (int)transform.position.x;
+        //row = targetY;
+        //column = targetX;
+        //beforeRow = row;
+        //beforeColumn = column;
     }
 
     private void Update()
@@ -39,7 +39,7 @@ public class Dot : MonoBehaviour
         if (isMatched)
         {
             SpriteRenderer mySprite = GetComponent<SpriteRenderer>();
-            //mySprite.color = new Color(1f, 1f, 1f, .2f);
+            mySprite.color = new Color(1f, 1f, 1f, .2f);
         }
 
         targetX = column;
@@ -101,24 +101,32 @@ public class Dot : MonoBehaviour
         if(swipeAngle >-45 && swipeAngle <= 45 && column < board.width-1) //오른쪽으로 드래그
         {
             otherDot = board.allDots[column + 1, row];
+            beforeRow = row;
+            beforeColumn = column;
             otherDot.GetComponent<Dot>().column -= 1;
             column += 1;
         }
         else if (swipeAngle > 45 && swipeAngle <= 135 && row <board.height-1) //위로 드래그
         {
-            otherDot = board.allDots[column, row + 1]; 
+            otherDot = board.allDots[column, row + 1];
+            beforeRow = row;
+            beforeColumn = column;
             otherDot.GetComponent<Dot>().row -= 1;
             row += 1;
         }
         else if ((swipeAngle >135 || swipeAngle <= -135 ) && column>0) //왼쪽으로 드래그
         {
             otherDot = board.allDots[column - 1, row];
+            beforeRow = row;
+            beforeColumn = column;
             otherDot.GetComponent<Dot>().column += 1;
             column -= 1;
         }
         else if((swipeAngle >-135 || swipeAngle <=-45) && row >0)//남은 아래로 드래그
         {
             otherDot = board.allDots[column, row - 1];
+            beforeRow = row;
+            beforeColumn = column;
             otherDot.GetComponent<Dot>().row += 1;
             row -= 1;
         }
